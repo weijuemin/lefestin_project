@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="description" content="A feast of recipes made and shared by your friends and family">
+	<title>Le Festin - Create your recipe</title>
+	{% load staticfiles %}
+    <script src="{% static 'lefestin/js/jquery.js' %}"></script>
+    <script src="{% static 'lefestin/js/Bootstrap.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'lefestin/css/bootstrap.css' %}">
+    <script src="{% static 'lefestin/js/jqueryui.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'lefestin/css/jqueryui.css' %}">
+    <script src="{% static 'lefestin/js/show_recipe.js' %}"></script>
+    <!-- <link rel="stylesheet" href="{% static 'lefestin/css/create_recipe.css' %}"> -->
+</head>
+<body>
+	<div class="container-fluid">
+		{{ recipe.name }}
+		{% for ingredient in ingredients %}
+		<p>{{ingredient.name}}</p>
+		<p>{{ingredient.quantity}}</p>
+		{% endfor %}
+		{% for step in steps %}
+		<p>{{step.step_num}}</p>
+		<p>{{step.direction}}</p>
+		{% endfor %}
+	</div>
+</body>
+</html>

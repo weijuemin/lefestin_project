@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="description" content="A feast of recipes made and shared by your friends and family">
+	<title>Le Festin - Home</title>
+	{% load staticfiles %}
+    <script src="{% static 'lefestin/js/jquery.js' %}"></script>
+    <script src="{% static 'lefestin/js/Bootstrap.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'lefestin/css/bootstrap.css' %}">
+	<link rel="stylesheet" href="{% static 'lefestin/css/home.css' %}">
+    <script src="{% static 'lefestin/js/jqueryui.js' %}"></script>
+	<script src="{% static 'lefestin/js/main.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'lefestin/css/jqueryui.css' %}">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+</head>
+<body>
+    <button class="btn btn-default"><a href="{% url 'logout' %}">Logout</a></button>
+    <h1>Le Festin</h1>
+	<p>Welcome {{ loggedin.first_name }}!</p>
+	<table class="table table-hover">
+        <tr>
+            <th>Group name </th>
+            <th>Action</th>
+        </tr>
+    {% for group in groups %}
+        <tr>
+            <td>Group photo to go here</td>
+            <td><form action="{% url "deletegroup" id=group.id %}" method="post">
+	            {% csrf_token %}
+	            <input class="btn btn-default" type="submit" value ="Delete">
+	        </form></td>
+        </tr>
+        {% endfor %}
+    </table>
+	<button id="id_addgroup" class="btn btn-info">Add a group</button>
+	<div id="add_group"></div>
+    <button class="btn btn-info"><a href="{% url 'create_recipe' %}">Create recipe</a></button>
+	<div id="toggle_addgroup" class="hide">
+		{% if messages %}
+	    <ul class="list-group">
+	        <li class="list-group-item list-group-item-danger">ATTENTION REQUIRED</li>
+	        {% for message in messages %}
+	        <li class="list-group-item list-group-item-danger">{{ message }}</li>
+	        {% endfor %}
+	    </ul>
+	    {% endif %}
+	    <h2>Add a group:</h2>
+	    <form action="{% url 'process_addgroup' %}" method="POST" class="form-horizontal" enctype="multipart/form-data">
+	        {% csrf_token %}
+	        <div class="form-group">
+	        <label class="col-sm-3 control-label">Group Name</label>
+	        <div class="col-sm-9">
+	        <input type="text" name="group_name" class="form-control">
+	        </div>
+	        </div>
+	        <div class="form-group">
+	        <label class="col-sm-3 control-label">Description</label>
+	        <div class="col-sm-9">
+	        <input type="text" name="description" class="form-control">
+	        </div>
+	        </div>
+	        <input type="file" name="photo">
+	        <input class="btn btn-default" type="submit" value="Add Group">
+	    </form>
+	</div>
+</body>
+</html>

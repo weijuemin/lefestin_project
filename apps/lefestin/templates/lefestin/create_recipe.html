@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="description" content="A feast of recipes made and shared by your friends and family">
+	<title>Le Festin - Create your recipe</title>
+	{% load staticfiles %}
+    <script src="{% static 'lefestin/js/jquery.js' %}"></script>
+    <script src="{% static 'lefestin/js/Bootstrap.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'lefestin/css/bootstrap.css' %}">
+    <script src="{% static 'lefestin/js/jqueryui.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'lefestin/css/jqueryui.css' %}">
+    <script src="{% static 'lefestin/js/create_recipe.js' %}"></script>
+    <!-- <link rel="stylesheet" href="{% static 'lefestin/css/create_recipe.css' %}"> -->
+</head>
+<body>
+	<!-- nav bar -->
+	<div class="container-fluid">
+		<h3>Create your recipe</h3>
+		<form action="{ url 'create_recipe_process' }" method="post" id="create_recipe_f">
+		{% csrf_token %}
+		<div class="form-group">
+			<label for="recipeName">Recipe name:</label>
+			<input type="text" class="form-control" id="recipeName" name="recipeName">
+		</div>
+		<div class="form-group">
+	    <label>Upload product picture</label>
+	    <input type="file" name="product_pic">
+	  </div>
+		<div class="form-group">
+			<label for="ingredient">Ingredients needed: </label>
+			<div id="ingredient">
+				<input type="text" class="form-control" placeholder="Quantity" name="quantity"> 
+				<input type="text" class="form-control" placeholder="Ingredient name" name="igdName"> 
+				<span class="btn btn-default btn-sm" id="addIgdBtn" disabled>Add this</span> 
+			</div>
+		</div>
+		
+		<div id="igdDisplay"></div>
+
+		<div class="form-group" id="step">
+			<h4>Add step</h4>
+			<div id="stepContent">
+				<textarea name="direction"></textarea><br>
+		    <div class="btn btn-default btn-sm" id="saveStep" disabled>Save</div>
+			</div>
+		</div>
+		<div id="stepDisplay"></div>
+
+		<button class="btn btn-primary" id="submitRecipe" disabled>Submit your recipe</button>
+		</form>
+	</div>
+	<div id="show_recipe"></div>
+</body>
+</html>

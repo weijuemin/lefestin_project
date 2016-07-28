@@ -1,0 +1,38 @@
+body {
+    background-image: url('../pics/big_ole_pork_image.png');
+    background-size: 100%;
+    /*background-position: 100% 0%;*/
+    background-repeat: no-repeat;
+}
+* {
+    font-family: serif;
+    color: black;
+    /*border: 1px dotted red;*/
+}
+#logo_div {
+    padding: 30% 32% 3% 32%;
+}
+#login_div {
+    margin-top: 8%;
+    background-color: white;
+    padding: 10% 18% 12% 18%;
+    text-align: center;
+}
+#login_submit_btn {
+    border-radius: 5px;
+    padding: 3% 41% 3% 41%;
+    margin-bottom: 6%;
+    background-color: #56C4FF;
+    color: white;
+    font-family: Verdana;
+}
+#login_heading{
+    font-weight: bold;
+}
+#register_here {
+    color: #56C4FF;
+}
+a:link, a:visited {
+    color: #56C4FF;
+    text-decoration: underline;
+}

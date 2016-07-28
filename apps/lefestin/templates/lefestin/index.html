@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="description" content="A feast of recipes made and shared by your friends and family">
+	<title>Le Festin - Login</title>
+	{% load staticfiles %}
+    <script src="{% static 'lefestin/js/jquery.js' %}"></script>
+    <script src="{% static 'lefestin/js/Bootstrap.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'lefestin/css/bootstrap.css' %}">
+	<link rel="stylesheet" href="{% static 'lefestin/css/login.css' %}">
+    <script src="{% static 'lefestin/js/jqueryui.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'lefestin/css/jqueryui.css' %}">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+</head>
+<body>
+	<div class="container">
+        <div class="row">
+            <div class="col-xs-6 col-md-4"></div>
+            <div class="col-xs-6 col-md-4">
+                {% if messages %}
+                <li class="list-group-item">ATTENTION REQUIRED:</li>
+                {% for message in messages %}
+                <li class="list-group-item">{{ message }}</li>
+                {% endfor %}
+                </ul>
+                {% endif %}
+                <div id="logo_div">
+					<img src="{% static 'lefestin/pics/le_festin_white.png'%}" />
+				</div>
+                <div id="login_div">
+					<h3 id="login_heading">Login</h3>
+                    <form action="{% url 'login' %}" method="POST" class="form-horizontal">
+                        {% csrf_token %}
+                        <div class="form-group">
+                        <div class="col-sm-12">
+                        <input type="text" name="email" class="form-control" placeholder="Email">
+                        </div>
+                        </div>
+                        <div class="form-group">
+                        <div class="col-sm-12">
+                        <input type="password" name="password" class="form-control" placeholder="Password">
+                        </div>
+                        </div>
+						<input id="login_submit_btn" type="submit" value="Login">
+                    </form>
+                    <p id="register_here">Not a member? <a href="{% url 'register' %}">Register here.</a></p>
+            	</div>
+            <div class="col-xs-6 col-md-4"></div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="description" content="A feast of recipes made and shared by your friends and family">
+	<title>Le Festin - Add a group</title>
+	{% load staticfiles %}
+    <script src="{% static 'lefestin/js/jquery.js' %}"></script>
+    <script src="{% static 'lefestin/js/Bootstrap.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'lefestin/css/bootstrap.css' %}">
+    <script src="{% static 'lefestin/js/jqueryui.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'lefestin/css/jqueryui.css' %}">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+</head>
+<body>
+    {% if messages %}
+    <ul class="list-group">
+        <li class="list-group-item list-group-item-danger">ATTENTION REQUIRED</li>
+        {% for message in messages %}
+        <li class="list-group-item list-group-item-danger">{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <h2>Add a group:</h2>
+    <form action="{% url 'process_addgroup' %}" method="POST" class="form-horizontal" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+        <label class="col-sm-3 control-label">Group Name</label>
+        <div class="col-sm-9">
+        <input type="text" name="group_name" class="form-control">
+        </div>
+        </div>
+        <div class="form-group">
+        <label class="col-sm-3 control-label">Description</label>
+        <div class="col-sm-9">
+        <input type="text" name="description" class="form-control">
+        </div>
+        </div>
+        <input type="file" name="photo">
+        <input class="btn btn-default" type="submit" value="Add Group">
+    </form>
+</body>
+</html>
