@@ -25,16 +25,16 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Le Festin</a>
+      <a class="navbar-brand" href="{% url 'index' %}"><img src="{% static 'lefestin/pics/le_festin_white.png'%}" /></a>
     </div>
-  
+
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li><a href="{%url 'index'%}">Home</a></li>
         <li><a href="{%url 'showgroups'%}">Groups</a></li>
+        <li><a href="{%url 'showrecipes'%}">Recipes</a></li>
       </ul>
-      <li><a href="{%url 'showrecipes'%}">Recipes</a></li>
       <form action="{% url 'search_group' %}" method="post" class="navbar-form navbar-left">
       {% csrf_token %}
         <div class="form-group">
@@ -51,7 +51,7 @@
 </nav>
 {% if latestGroup %}
 <div class="container">
-    <h3>Congratulations! You just created group</h3> 
+    <h3>Congratulations! You just created group</h3>
     <div class="showGroupInfo">
         <img style="width:100px; height:100px" class="groupImg" src="{{ latestGroup.photo.url }}" alt="{{ latestGroup.photo.url }}">
         <p>{{latestGroup.group_name}}</p>

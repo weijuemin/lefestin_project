@@ -97,7 +97,7 @@
     		<div class="col-md-4 col-md-offset-0 col-sm-10 col-sm-offset-1 col-xm-12 homeShow">
     			<div class="innerBorder">
     			<img src="{% static 'lefestin/pics/family.png' %}" alt="family.png">
-    			<button id="id_addgroup" class="btn btn-info">Add a group</button>
+    			<button class="btn btn-info"><a href="{% url 'addgroup' %}">Add a group</a></button>
     			</div>
     		</div>
     		<div class="col-md-4 col-md-offset-0 col-sm-10 col-sm-offset-1 col-xm-12 homeShow">
@@ -108,7 +108,7 @@
     		</div>
     	</div>
     </div>
-	<div id="toggle_addgroup" class="hide">
+	<!-- <div id="toggle_addgroup" class="hide">
 	    <h2>Add a group:</h2>
 	    <form action="{% url 'process_addgroup' %}" method="POST" id="process_addgroup" class="form-horizontal" enctype="multipart/form-data">
 	        {% csrf_token %}
@@ -127,6 +127,6 @@
 	       	{{ formGroup }}
 	        <input class="btn btn-default" type="submit" value="Add Group">
 	    </form>
-	</div>
+	</div> -->
 </body>
 </html>

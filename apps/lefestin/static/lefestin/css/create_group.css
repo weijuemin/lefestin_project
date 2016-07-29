@@ -1,0 +1,24 @@
+#add_group_div {
+    width: 50%;
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 5%;
+}
+
+#left_image {
+    width: 30%;
+    display: inline-block;
+}
+#left_image_img {
+    width: 100%;
+}
+
+#submit_addgroup_btn {
+    border-radius: 5px;
+    padding: 1% 6% 1% 6%;
+    margin-bottom: 6%;
+    background-color: #56C4FF;
+    color: white;
+    font-family: Verdana;
+    border-style: none;
+}

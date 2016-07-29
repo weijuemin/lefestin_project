@@ -24,14 +24,14 @@
 	outline: 2px inset rgb(24,113,153);
 }
 .header {
-    height: 25%;
+    height: 15%;
 	background-image: url('../pics/half_pork.png');
 	background-size: cover;
-
 }
 #styleheader{
     color: white;
     font-family: serif;
+    margin: 10% 0% 0% 23%;
 }
 
 .userInfo:first-child {

@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{% static 'lefestin/css/bootstrap.css' %}">
     <script src="{% static 'lefestin/js/jqueryui.js' %}"></script>
     <link rel="stylesheet" href="{% static 'lefestin/css/jqueryui.css' %}">
+	<link rel="stylesheet" href="{% static 'lefestin/css/create_group.css' %}">
     <link rel="stylesheet" href="{% static 'lefestin/css/styles.css' %}">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 </head>
@@ -24,9 +25,9 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Le Festin</a>
+      <a class="navbar-brand" href="{% url 'index' %}"><img src="{% static 'lefestin/pics/le_festin_white.png'%}" /></a>
     </div>
-    
+
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
@@ -56,7 +57,10 @@
         {% endfor %}
     </ul>
     {% endif %}
-    <h2>Add a group:</h2>
+	<div class="container-fluid">
+	<div id="left_image"><img id="left_image_img" src="{% static 'lefestin/pics/default_group.jpg'%}"></div>
+	<div id="add_group_div">
+    <h3>Add a group</h3>
     <form action="{% url 'process_addgroup' %}" method="POST" class="form-horizontal" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="form-group">
@@ -71,8 +75,15 @@
         <input type="text" name="description" class="form-control">
         </div>
         </div>
-        <input type="file" name="photo">
-        <input class="btn btn-default" type="submit" value="Add Group">
+		<div class="form-group">
+        <input type="file" name="photo" class="col-sm-9" id-"file_upload">
+		</div>
+		<div class="row">
+        <input id="submit_addgroup_btn" type="submit" value="Add Group"></div>
+		</div>
+		</div>
     </form>
+</div>
+</div>
 </body>
 </html>
