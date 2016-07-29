@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="{% static 'lefestin/css/jqueryui.css' %}">
   <link rel="stylesheet" href="{% static 'lefestin/css/styles.css' %}">
   <script src="{% static 'lefestin/js/show_recipe.js' %}"></script>
-  <!-- <link rel="stylesheet" href="{% static 'lefestin/css/create_recipe.css' %}"> -->
+  <link rel="stylesheet" href="{% static 'lefestin/css/show_recipe.css' %}">
 </head>
 <body>
 <nav class="navbar navbar-inverse radius">
@@ -33,8 +33,8 @@
       <ul class="nav navbar-nav">
         <li><a href="{%url 'index'%}">Home</a></li>
         <li><a href="{%url 'showgroups'%}">Groups</a></li>
+        <li><a href="{%url 'showrecipes'%}">Recipes</a></li>
       </ul>
-      <li><a href="{%url 'showrecipes'%}">Recipes</a></li>
       <form action="{% url 'search_group' %}" method="post" class="navbar-form navbar-left">
       {% csrf_token %}
         <div class="form-group">
@@ -64,7 +64,10 @@
 </div>
 {% endif %}
 {% if not result %}
+<div class="container">
+<br><br>
 <p>No group matches your search...</p>
+</div>
 {% endif %}
 </div>
 </body>

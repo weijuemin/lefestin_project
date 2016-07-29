@@ -1,3 +1,6 @@
+.container {
+	width: 60%;
+}
 .this_recipe {
 	width: 70%;
 	text-align: center;
@@ -26,4 +29,8 @@ table th, td {
 	color: #FFF;
 	line-height: 30px;
 	background: linear-gradient(90deg, rgba(19, 90, 122, .3), rgba(19, 90, 122, .8), rgba(19, 90, 122, .3));
+}
+.flexItem a {
+	color: blue;
+	font-size: 16px;
 }
