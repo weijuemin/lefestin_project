@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="description" content="A feast of recipes made and shared by your friends and family">
-	<title>Le Festin - Create your recipe</title>
-	{% load staticfiles %}
+    <meta charset="UTF-8">
+    <meta name="description" content="A feast of recipes made and shared by your friends and family">
+    <title>Le Festin - Create your recipe</title>
+    {% load staticfiles %}
     <script src="{% static 'lefestin/js/jquery.js' %}"></script>
     <script src="{% static 'lefestin/js/Bootstrap.js' %}"></script>
     <link rel="stylesheet" href="{% static 'lefestin/css/bootstrap.css' %}">
     <script src="{% static 'lefestin/js/jqueryui.js' %}"></script>
     <link rel="stylesheet" href="{% static 'lefestin/css/jqueryui.css' %}">
-    <script src="{% static 'lefestin/js/create_recipe.js' %}"></script>
-    <link rel="stylesheet" href="{% static 'lefestin/css/create_recipe.css' %}">
+    <link rel="stylesheet" href="{% static 'lefestin/css/styles.css' %}">
+    <script src="{% static 'lefestin/js/show_recipe.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'lefestin/css/show_group.css' %}">
 </head>
 <body>
 <nav class="navbar navbar-inverse radius">
@@ -24,9 +25,9 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="{%url 'index'%}"><img src="{% static 'lefestin/pics/le_festin_white.png' %}" alt="logo"></a>
+      <a class="navbar-brand" href="{% url 'index' %}"><img src="{% static 'lefestin/pics/le_festin_white.png'%}" /></a>
     </div>
-    
+
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
@@ -48,40 +49,10 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
-	<!-- nav bar -->
-	<div class="container-fluid create_recipe">
-		<h3>Create your recipe</h3>
-		<form action="{% url 'create_recipe_process' %}" method="post" id="create_recipe_f" enctype="multipart/form-data">
-		{% csrf_token %}
-		<div class="form-group">
-			<label for="recipeName">Recipe name:</label>
-			<input type="text" class="form-control" id="recipeName" name="recipeName">
-		</div>
-		<div class="form-group">
-	    {{ form }}
-	  	</div>
-		<div class="form-group">
-			<div id="ingredient">
-				<label for="ingredient">Ingredients needed: </label>
-				<input type="text" class="form-control" placeholder="Quantity" name="quantity"> 
-				<input type="text" class="form-control" placeholder="Ingredient name" name="igdName"> 
-				<span class="btn btn-default btn-sm" id="addIgdBtn" disabled>Add this</span> 
-			</div>
-		</div>
-		
-		<div id="igdDisplay"></div>
-
-		<div class="form-group" id="step">
-			<label>Add steps</label>
-			<div id="stepContent">
-				<textarea name="direction"></textarea><br>
-		    <div class="btn btn-default btn-sm" id="saveStep" disabled>Save</div>
-			</div>
-		</div>
-		<div id="stepDisplay"></div>
-
-		<button class="btn btn-primary" id="submitRecipe" disabled>Submit your recipe</button>
-		</form>
-	</div>
+<div class="container showGroupInfo">
+	<h2>{{ this.group_name }} - Created by: {{this.creator.first_name}}</h2>
+	<img src="{{this.photo.url}}" alt="{{this.photo.url}}" class="group_img">
+	<div class="group_description">{{this.descriptioin}}</div>
+</div>		
 </body>
 </html>

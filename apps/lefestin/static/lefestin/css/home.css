@@ -1,54 +1,95 @@
 .hide {
     display: none;
 }
+#h2 {
+	font-weight: bold;
+	color: #fff;
+	margin-bottom: 3%;
+}
+.veil {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(80,80,80,.9);
+	z-index: 10;
+}
 .homeShow img {
 	width: 100%;
-	height: 90%;
 }
 .homeShow {
 	min-height: 50vh;
 	text-align: center;
 }
 .homeShow button {
-	margin: 8% auto;
+	margin: 14% auto;
 	cursor: pointer;
 	z-index: 100;
 }
 .homeShow li {
 	list-style: none;
 }
+#toggle_addgroup {
+	width: 45%;
+	min-height: 50vh;
+	background-color: rgba(24,113,153,.9);
+	border-radius: 10px;
+	padding: 4%;
+	text-align: center;
+	position: absolute;
+	left: 28%;
+	top: 40vh;
+	z-index: 11;
+}
+.fileUpload {
+	margin: 0 auto;
+}
+.fileUpload input[type="file"] {
+	font-size: 12px;
+	border-radius: 5px;
+	display: inline;
+	margin-left: 5px;
+}
+input[type="submit"] {
+	text-align: center;
+	display: block;
+	margin: 5% auto;
+}
 .innerBorder {
 	outline: 1px solid rgb(210,210,210);
+	height: 60vh;
 }
 .innerBorder:hover {
 	outline: 2px inset rgb(24,113,153);
 }
 .header {
-<<<<<<< HEAD
 	background-image: url('../pics/half_pork.png');
 	height: 60vh;
-=======
-	height: 60vh;
-	background-image: url('../pics/header.jpg');
->>>>>>> parent of 081eddc... added styling to registration page, some cleanup to home
 	background-size: cover;
 }
-<<<<<<< HEAD
-
+.headerP {
+	text-align: center;
+	font-style: italic;
+	color: rgb(160,160,160);
+}
+.first {
+	background: url('../pics/home_user.jpg');
+	background-size: 100% 100%;
+	color: #187199;
+	font-weight: bold;
+}
 #styleheader{
     color: white;
     font-family: serif;
-    margin: 10% 0% 0% 23%;
+    margin: 18vh auto 0;
+    text-align: center;
 }
-
-=======
->>>>>>> parent of 081eddc... added styling to registration page, some cleanup to home
 .userInfo:first-child {
-	height: 35vh;
+	height: 30vh;
 	overflow-y: scroll;
 }
 .userInfo:last-child {
-	height: 15vh;
+	height: 20vh;
+	overflow-y: scroll;
 }
 .container {
 	padding-bottom: 10%;

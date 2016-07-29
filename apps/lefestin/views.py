@@ -113,6 +113,12 @@ def showgroups(request):
         'otherGroups': otherGroups,
     }
     return render(request, 'lefestin/show_group.html', context)
+def showgroup(request):
+    this = Group.objects.get(id=request.POST['hiddenGroupId'])
+    context = {
+        'this': this
+    }
+    return render(request, 'lefestin/show_group_ind.html', context)
 def searchGroup(request):
     pattern = request.POST['search_group']
     result = Group.objects.filter(group_name__contains=pattern)
@@ -173,6 +179,11 @@ def showrecipes(request):
         'steps':steps
     }
     return render (request, 'lefestin/show_recipes.html', context)
+def deleterecipe(request, id):
+    this = Recipe.objects.get(id=id)
+    this.delete()
+    return redirect(reverse('home', kwargs={'id':request.session['logged_in']}))
+
 def delete_recipe(request):
     recipes = Recipe.objects.all()
     recipes.delete()

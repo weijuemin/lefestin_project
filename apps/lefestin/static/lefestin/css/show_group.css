@@ -1,0 +1,16 @@
+.container {
+	width: 65%;
+	text-align: center;
+}
+.h3 {
+	font-weight: bold;
+	color: rgb(24,113,153);
+	text-align: center;
+}
+.showGroupInfo img {
+	width: 100%;
+}
+.showGroupInfo {
+	/*outline: 1px solid red;*/
+	padding-bottom: 4%;
+}

@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="{% static 'lefestin/css/jqueryui.css' %}">
     <link rel="stylesheet" href="{% static 'lefestin/css/styles.css' %}">
     <script src="{% static 'lefestin/js/show_recipe.js' %}"></script>
-    <!-- <link rel="stylesheet" href="{% static 'lefestin/css/create_recipe.css' %}"> -->
+    <link rel="stylesheet" href="{% static 'lefestin/css/show_recipe.css' %}">
 </head>
 <body>
 <nav class="navbar navbar-inverse radius">
@@ -25,7 +25,7 @@
 	        <span class="icon-bar"></span>
 	        <span class="icon-bar"></span>
 	      </button>
-	      <a class="navbar-brand" href="{% url 'index' %}"><img src="{% static 'lefestin/pics/le_festin_white.png'%}" /></a>
+	      <a class="navbar-brand" href="{% url 'index' %}"><img class="navLogo" src="{% static 'lefestin/pics/le_festin_white.png'%}" /></a>
 	    </div>
 
 	    <!-- Collect the nav links, forms, and other content for toggling -->
@@ -49,16 +49,28 @@
 	    </div><!-- /.navbar-collapse -->
 	  </div><!-- /.container-fluid -->
 	</nav>
-	<div class="container-fluid latest_recipe">
-		<p>{{ recipe.name }}</p>
-		<p>creator: {{recipe.user.first_name}}</p>
-		<img src="{{recipe.product_pic.url}}" alt="{{recipe.product_pic.url}}">
+	<div class="container-fluid this_recipe">
+		<h2>{{ recipe.name }} - Created by: {{recipe.user.first_name}}</h2>
+		<img src="{{recipe.product_pic.url}}" alt="{{recipe.product_pic.url}}" class="recipe_img">
+		<h4>Ingredients needed:</h4>
+		<table class="table">
+			<tr>
+				<th>Quantity</th>
+				<th>Ingredient</th>
+			</tr>
 		{% for ingredient in ingredients %}
-		<p>{{ingredient.quantity}}: {{ingredient.name}}</p>
+			<tr>
+				<td>{{ingredient.quantity}}</td>
+				<td>{{ingredient.name}}</td>
+			</tr>
 		{% endfor %}
+		</table>
+		<h4>Steps:</h4>
 		{% for step in steps %}
-		<p>{{step.step_numer}}: {{step.direction}}</p>
+		<p>{{step.step_number}}. {{step.direction}}</p>
 		{% endfor %}
+		<br>
+		<button class="btn btn-danger"><a href="{% url 'deleterecipe' recipe.id %}">Delete recipe</a></button>
 	</div>
 </body>
 </html>

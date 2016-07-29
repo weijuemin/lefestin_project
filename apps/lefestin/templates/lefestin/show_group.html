@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="{% static 'lefestin/css/jqueryui.css' %}">
     <link rel="stylesheet" href="{% static 'lefestin/css/styles.css' %}">
     <script src="{% static 'lefestin/js/show_recipe.js' %}"></script>
-    <!-- <link rel="stylesheet" href="{% static 'lefestin/css/create_recipe.css' %}"> -->
+    <link rel="stylesheet" href="{% static 'lefestin/css/show_group.css' %}">
 </head>
 <body>
 <nav class="navbar navbar-inverse radius">
@@ -51,17 +51,21 @@
 </nav>
 {% if latestGroup %}
 <div class="container">
-    <h3>Congratulations! You just created group</h3>
-    <div class="showGroupInfo">
-        <img style="width:100px; height:100px" class="groupImg" src="{{ latestGroup.photo.url }}" alt="{{ latestGroup.photo.url }}">
-        <p>{{latestGroup.group_name}}</p>
-        <button class="deleteGroup"><a href="">Delete</a></button>
+    <h3 class="h3">Congratulations! You just created group {{latestGroup.group_name}}</h3>
+    <div class="row">
+    <div class="showGroupInfo col-md-4 col-sm-6 col-sm-offset-3 col-xm-12">
+        <img class="groupImg" src="{{ latestGroup.photo.url }}" alt="{{ latestGroup.photo.url }}">
+        <p><form class="showGroupForm" action="{% url 'showgroup' %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" value="{{latestGroup.id}}" name="hiddenGroupId"><input type="submit" class="btn btn-link" value="{{latestGroup.group_name}}"></form></p>
+        <button class="deleteGroup btn btn-danger"><a href="{% url 'deletegroup' latestGroup.id %}">Delete</a></button>
+    </div>
     </div>
 </div>
 {% endif %}
 <div class="container otherGroup">
     {% if latestGroup %}
-    <h3>Other groups you created:</h3>
+    <h3 class="h3">Other groups you created:</h3>
     {% endif %}
     {% if not latestGroup %}
     <h3>Groups you created:</h3>
@@ -69,10 +73,12 @@
     {% if earlyGroups %}
     <div class="row">
         {% for group in earlyGroups %}
-        <div class="col-xs-6 col-md-3 showGroupInfo">
-            <img style="width:100px; height:100px" class="groupImg" src="{{ group.photo.url }}" alt="{{ group.photo.url }}">
-            <p>{{group.group_name}}</p>
-            <button class="deleteGroup"><a href="">Delete</a></button>
+        <div class="showGroupInfo col-md-4 col-sm-6 col-xm-12">
+            <img class="groupImg" src="{{ group.photo.url }}" alt="{{ group.photo.url }}">
+            <p><form class="showGroupForm" action="{% url 'showgroup' %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" value="{{group.id}}" name="hiddenGroupId"><input type="submit" class="btn btn-link" value="{{group.group_name}}"></form></p>
+            <button class="deleteGroup btn btn-danger"><a href="{% url 'deletegroup' group.id %}">Delete</a></button>
         </div>
         {% endfor %}
     </div>
@@ -87,16 +93,22 @@
     {% endif %}
     {% if otherGroups %}
       <div class="row">
-      <h3>Groups of other members</h3>
+      <h3 class="h3">Groups of other members</h3>
+      <div class="row">
           {% for group in otherGroups %}
-          <div class="col-xs-6 col-md-3 showGroupInfo">
-              <img style="width:100px; height:100px" class="groupImg" src="{{ group.photo.url }}" alt="{{ group.photo.url }}">
-              <p>{{group.group_name}}</p>
-              <button class="deleteGroup"><a href=""></a></button>
+          <div class="col-md-4 col-sm-6 col-sm-offset-3 col-xm-12 showGroupInfo">
+              <img class="groupImg" src="{{ group.photo.url }}" alt="{{ group.photo.url }}">
+              <p><form class="showGroupForm" action="{% url 'showgroup' %}" method="post">
+              {% csrf_token %}
+              <input type="hidden" value="{{group.id}}" name="hiddenGroupId">
+              <input type="submit" class="btn btn-link" value="{{group.group_name}}"></form></p>
+              <button class="deleteGroup btn btn-danger"><a href="{% url 'deletegroup' group.id %}">Delete</a></button>
           </div>
           {% endfor %}
+        </div>
       </div>
      {% endif %}
+     <div class="showGroupInd"></div>
 </div>
 </body>
 </html>

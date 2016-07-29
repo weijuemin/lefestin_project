@@ -1,0 +1,31 @@
+.create_recipe {
+	width: 65%;
+	text-align: left;
+}
+.create_recipe h3 {
+	background: linear-gradient(90deg, rgba(19, 90, 122, .3), rgba(19, 90, 122, .8), rgba(19, 90, 122, .3));
+	line-height: 50px;
+	font-weight: bold;
+	color: gold;
+	text-align: center;
+}
+#ingredient input:nth-child(2) {
+	width: 25%;
+	display: inline;
+}
+#ingredient input:nth-child(3) {
+	width: 40%;
+	display: inline;
+}
+.create_recipe form div input[type="file"] {
+	display: inline;
+	margin-left: 10px;
+}
+#recipeName {
+	display: inline;
+	width: 60%;
+}
+#step textarea {
+	width: 60%;
+	border-radius: 5px;
+}
