@@ -17,7 +17,7 @@
 	<!-- nav bar -->
 	<div class="container-fluid">
 		<h3>Create your recipe</h3>
-		<form action="{ url 'create_recipe_process' }" method="post" id="create_recipe_f">
+		<form action="{% url 'create_recipe_process' %}" method="post" id="create_recipe_f" enctype="multipart/form-data">
 		{% csrf_token %}
 		<div class="form-group">
 			<label for="recipeName">Recipe name:</label>
@@ -25,8 +25,8 @@
 		</div>
 		<div class="form-group">
 	    <label>Upload product picture</label>
-	    <input type="file" name="product_pic">
-	  </div>
+	    {{ form }}
+	  	</div>
 		<div class="form-group">
 			<label for="ingredient">Ingredients needed: </label>
 			<div id="ingredient">
@@ -50,6 +50,5 @@
 		<button class="btn btn-primary" id="submitRecipe" disabled>Submit your recipe</button>
 		</form>
 	</div>
-	<div id="show_recipe"></div>
 </body>
 </html>

@@ -46,15 +46,4 @@ $(function(){
 		var numThis = $(this).attr('data-num');
 		$('#showStep'+numThis).remove();
 	})
-	$('#create_recipe_f').on('submit',function(e){
-		e.preventDefault();
-		$.ajax({
-			url: '/user/create/recipe/process',
-      method: 'post',
-      data: $(this).serialize(),
-      success: function(serverResponse){
-        $('#show_recipe').html(serverResponse);
-      }
-    })
-	})
 })

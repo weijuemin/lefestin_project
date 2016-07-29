@@ -14,8 +14,10 @@
     <!-- <link rel="stylesheet" href="{% static 'lefestin/css/create_recipe.css' %}"> -->
 </head>
 <body>
-	<div class="container-fluid">
-		{{ recipe.name }}
+	<div class="container-fluid latest_recipe">
+		<p>{{ recipe.name }}</p>
+		<p>creator: {{recipe.user.first_name}}</p>
+		<img src="{{recipe.product_pic.url}}" alt="{{recipe.product_pic.url}}">
 		{% for ingredient in ingredients %}
 		<p>{{ingredient.name}}</p>
 		<p>{{ingredient.quantity}}</p>
@@ -24,6 +26,11 @@
 		<p>{{step.step_num}}</p>
 		<p>{{step.direction}}</p>
 		{% endfor %}
+	</div>
+	<div class="container-fluid other_recipes">
+		<h3>Other recipes you created:</h3>
+		{% if otherRecipes %}
+		{% endif %}
 	</div>
 </body>
 </html>

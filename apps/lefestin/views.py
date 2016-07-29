@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.core.urlresolvers import reverse
 import bcrypt
-from .models import User, Group
+from .models import User, Group, Recipe, Step, Ingredient
 from django.contrib import messages
+from .forms import UploadFileForm, UploadGroupImg
+import json
 
-# Create your views here.
+
 def index(request):
     try:
         request.session['logged_in']
@@ -54,10 +56,14 @@ def registration(request):
 
 def home(request, id):
     try:
+        if request.method == 'POST':
+            formGroup = UploadGroupImg(request.POST, request.FILES)
+        else:
+            formGroup = UploadGroupImg()
         request.session['logged_in']
         context = {
-        "loggedin": User.objects.get(id=id),
-        "groups": Group.objects.all()
+            "loggedin": User.objects.get(id=id),
+            'formGroup': formGroup
         }
         return render(request, 'lefestin/home.html', context)
     except KeyError:
@@ -66,18 +72,42 @@ def home(request, id):
 def addgroup(request):
     return render(request, 'lefestin/create_group.html')
 
+def date_handler(obj):
+    return obj.isoformat() if hasattr(obj, 'isoformat') else obj
+
+def getAllGroups(request):
+    stringResult = ""
+    # keys = ["group_name", "description", "creator", "photo", "grouped_users_id", "created_at", "updated_at"]
+    for group in Group.objects.all():
+        stringResult += "{} | {} \n".format(group.group_name, group.creator_id) 
+    return HttpResponse(stringResult);
+
 def process_addgroup(request):
     if request.method == "POST":
-        results = Group.groupManager.isValidGroup(request.POST, request.FILES)
+        results = Group.groupManager.isValidGroup(request.POST, request.FILES, request.session['logged_in'])
         if results[0]:
-            print request.POST
-            return redirect(reverse('home', kwargs={'id':request.session['logged_in']}))
+            latestGroup = Group.objects.get(group_name=request.POST['group_name'])
+            earlyGroups = Group.objects.filter(creator_id=request.session['logged_in']).exclude(group_name=request.POST['group_name']).order_by('created_at')
+            otherGroups = Group.objects.exclude(creator_id=request.session['logged_in'])
+            context = {
+                'latestGroup': latestGroup,
+                'earlyGroups': earlyGroups,
+                'otherGroups': otherGroups,
+            }
+            return render(request, 'lefestin/show_group.html', context)
         else:
             errors = results[1]
             for error in errors:
                 messages.error(request, error)
-                return redirect(reverse('addgrouptemp'))
-
+                return redirect('home', request.session['logged_in'])
+def showgroup(request):
+    earlyGroups = Group.objects.filter(creator_id=request.session['logged_in'])
+    otherGroups = Group.objects.exclude(creator_id=request.session['logged_in'])
+    context = {
+        'earlyGroups': earlyGroups,
+        'otherGroups': otherGroups,
+    }
+    return render(request, 'show_group.html', context)
 def deletegroup(request, id):
     this = Group.objects.get(id=id)
     this.delete()
@@ -87,14 +117,18 @@ def logout(request):
     request.session.clear()
     return redirect (reverse('index'))
 
-from .models import Recipe, Step, Ingredient
-
-# Create your views here.
 def create_recipe(request):
-    return render(request, 'lefestin/create_recipe.html')
+    if request.method == 'POST':
+        form = UploadFileForm(request.POST, request.FILES)
+    else:
+        form = UploadFileForm()
+    context = {
+        'form': form
+    }
+    return render(request, 'lefestin/create_recipe.html', context)
 
 def create_recipe_process(request):
-    recipe = Recipe.objects.create(name=request.POST['recipeName'], user_id=request.session['logged_in'])
+    recipe = Recipe.objects.create(name=request.POST['recipeName'], user_id=request.session['logged_in'], product_pic=request.FILES['image'])
     for i in range(0,100):
         if 'igdName{}'.format(i) in request.POST:
             Ingredient.objects.create(name=request.POST['igdName{}'.format(i)], quantity=request.POST['quantity{}'.format(i)], recipe_id=recipe.id)
@@ -107,10 +141,12 @@ def create_recipe_process(request):
             break
     ingredients = Ingredient.objects.filter(recipe_id=recipe.id)
     steps = Step.objects.filter(recipe_id=recipe.id)
+    otherRecipes = Recipe.objects.all().exclude(id=recipe.id)
     context = {
         'recipe': recipe,
         'ingredients': ingredients,
-        'steps': steps
+        'steps': steps,
+        'otherRecipes': otherRecipes,
     }
     return render(request, 'lefestin/show_recipe.html', context)
 
@@ -118,3 +154,7 @@ def delete_recipe(request):
     recipes = Recipe.objects.all()
     recipes.delete()
     return redirect('create_recipe')
+
+def delete_all_group(request):
+    Group.objects.all().delete()
+    return HttpResponse('deleted')

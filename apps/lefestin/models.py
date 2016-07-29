@@ -75,7 +75,7 @@ class User(models.Model):
   userManager = UserManager()
 
 class GroupManager(models.Manager):
-  def isValidGroup(self, userInfo, userFiles):
+  def isValidGroup(self, userInfo, userFiles, creator_id):
     passFlag = True
     errors = []
     if len(userInfo['group_name']) < 3:
@@ -84,14 +84,18 @@ class GroupManager(models.Manager):
     if len(userInfo['description']) < 10:
       errors.append('Group description must be 10 characters or more.')
       passFlag = False
-
     if passFlag == True:
-      self.create(group_name = userInfo['group_name'], description=userInfo['description'], photo=userFiles['photo'])
+      if self.filter(group_name=userInfo['group_name']):
+        errors.append('Group name not available')
+        passFlag = False
+        return [passFlag, errors]
+      self.create(group_name = userInfo['group_name'], description=userInfo['description'], photo=userFiles['GroupImage'], creator_id=creator_id)
     return [passFlag, errors]
 
 class Group(models.Model):
   group_name = models.CharField(max_length=50)
   description = models.CharField(max_length=250)
+  creator = models.ForeignKey(User, default=-1)
   photo = models.ImageField(upload_to='group_photos', default='images/default_group.jpg')
   grouped_users_id = models.ManyToManyField(User, related_name="grouped_users")
   created_at = models.DateTimeField(auto_now_add=True)
@@ -102,7 +106,7 @@ class Group(models.Model):
 class Recipe(models.Model):
   name = models.CharField(max_length=255)
   user = models.ForeignKey(User)
-  product_pic = models.ImageField(upload_to='recipes', default=None)
+  product_pic = models.ImageField(upload_to='recipes', blank=True)
   created_at = models.DateTimeField(auto_now_add=True)
   updated_at = models.DateTimeField(auto_now=True)
 

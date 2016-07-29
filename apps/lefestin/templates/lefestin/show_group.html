@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="A feast of recipes made and shared by your friends and family">
+    <title>Le Festin - Create your recipe</title>
+    {% load staticfiles %}
+    <script src="{% static 'lefestin/js/jquery.js' %}"></script>
+    <script src="{% static 'lefestin/js/Bootstrap.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'lefestin/css/bootstrap.css' %}">
+    <script src="{% static 'lefestin/js/jqueryui.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'lefestin/css/jqueryui.css' %}">
+    <script src="{% static 'lefestin/js/show_recipe.js' %}"></script>
+    <!-- <link rel="stylesheet" href="{% static 'lefestin/css/create_recipe.css' %}"> -->
+</head>
+<body>
+{% if latestGroup %}
+<div class="container">
+    <h3>Congratulations! You just created group</h3> 
+    <div class="showGroupInfo">
+        <img style="width:100px; height:100px" class="groupImg" src="{{ latestGroup.photo.url }}" alt="{{ latestGroup.photo.url }}">
+        <p>{{latestGroup.group_name}}</p>
+        <button class="deleteGroup"><a href="">Delete</a></button>
+    </div>
+</div>
+{% endif %}
+<div class="container otherGroup">
+    {% if latestGroup %}
+    <h3>Other groups you created:</h3>
+    {% endif %}
+    {% if not latestGroup %}
+    <h3>Groups you created:</h3>
+    {% endif %}
+    {% if earlyGroups %}
+    <div class="row">
+        {% for group in earlyGroups %}
+        <div class="col-xs-6 col-md-3 showGroupInfo">
+            <img style="width:100px; height:100px" class="groupImg" src="{{ group.photo.url }}" alt="{{ group.photo.url }}">
+            <p>{{group.group_name}}</p>
+            <button class="deleteGroup"><a href="">Delete</a></button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% if not earlyGroups %}
+      {% if not latestGroup %}
+      <p>You haven't created any group yet...</p>
+      {% endif %}
+      {% if latestGroup %}
+      <p>You haven't created any other groups yet...</p>
+      {% endif %}
+    {% endif %}
+    {% if otherGroups %}
+      <div class="row">
+      <h3>Groups of other members</h3>
+          {% for group in otherGroups %}
+          <div class="col-xs-6 col-md-3 showGroupInfo">
+              <img style="width:100px; height:100px" class="groupImg" src="{{ group.photo.url }}" alt="{{ group.photo.url }}">
+              <p>{{group.group_name}}</p>
+              <button class="deleteGroup"><a href=""></a></button>
+          </div>
+          {% endfor %}
+      </div>
+     {% endif %}
+</div>
+</body>
+</html>
