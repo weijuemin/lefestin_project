@@ -22,6 +22,7 @@ def login(request):
             if 'logged_in' not in request.session:
                 email = request.POST['email']
                 request.session['logged_in'] = User.objects.get(email=email).id
+                request.session['fname'] = User.objects.get(email=email).first_name
                 return redirect(reverse('home', kwargs={'id':request.session['logged_in']}))
         else:
             passFlag = False
@@ -55,19 +56,23 @@ def registration(request):
         return redirect(reverse('register'))
 
 def home(request, id):
+    if request.method == 'POST':
+        formGroup = UploadGroupImg(request.POST, request.FILES)
+    else:
+        formGroup = UploadGroupImg()
     try:
-        if request.method == 'POST':
-            formGroup = UploadGroupImg(request.POST, request.FILES)
-        else:
-            formGroup = UploadGroupImg()
         request.session['logged_in']
-        context = {
-            "loggedin": User.objects.get(id=id),
-            'formGroup': formGroup
-        }
-        return render(request, 'lefestin/home.html', context)
     except KeyError:
         return redirect(reverse('index'))
+    userRecipes = Recipe.objects.filter(user_id=request.session['logged_in'])
+    userGroups = Group.objects.filter(creator_id=request.session['logged_in'])
+    context = {
+        "loggedin": User.objects.get(id=id),
+        'formGroup': formGroup,
+        'userRecipes': userRecipes,
+        'userGroups': userGroups
+    }
+    return render(request, 'lefestin/home.html', context)
 
 def addgroup(request):
     return render(request, 'lefestin/create_group.html')
@@ -100,14 +105,22 @@ def process_addgroup(request):
             for error in errors:
                 messages.error(request, error)
                 return redirect('home', request.session['logged_in'])
-def showgroup(request):
+def showgroups(request):
     earlyGroups = Group.objects.filter(creator_id=request.session['logged_in'])
     otherGroups = Group.objects.exclude(creator_id=request.session['logged_in'])
     context = {
         'earlyGroups': earlyGroups,
         'otherGroups': otherGroups,
     }
-    return render(request, 'show_group.html', context)
+    return render(request, 'lefestin/show_group.html', context)
+def searchGroup(request):
+    pattern = request.POST['search_group']
+    result = Group.objects.filter(group_name__contains=pattern)
+    context = {
+        'result': result,
+        'count': len(result)
+    }
+    return render(request, 'lefestin/search.html', context)
 def deletegroup(request, id):
     this = Group.objects.get(id=id)
     this.delete()
@@ -135,21 +148,31 @@ def create_recipe_process(request):
         else:
             break
     for j in range(1,100):
-        if 'stepPic{}'.format(j) in request.POST:
+        if 'step_number{}'.format(j) in request.POST:
             Step.objects.create(step_number=request.POST['step_number{}'.format(i)], direction=request.POST['step{}'.format(j)], recipe_id=recipe.id)
         else:
             break
-    ingredients = Ingredient.objects.filter(recipe_id=recipe.id)
-    steps = Step.objects.filter(recipe_id=recipe.id)
-    otherRecipes = Recipe.objects.all().exclude(id=recipe.id)
+    return redirect('show_recipe', recipe.id)
+def show_recipe(request, recipe_id):
     context = {
-        'recipe': recipe,
-        'ingredients': ingredients,
-        'steps': steps,
-        'otherRecipes': otherRecipes,
+        'recipe': Recipe.objects.get(id=recipe_id),
+        'ingredients': Ingredient.objects.filter(recipe_id=recipe_id),
+        'steps': Step.objects.filter(recipe_id=recipe_id),
     }
     return render(request, 'lefestin/show_recipe.html', context)
-
+def showrecipes(request):
+    idList = []
+    recipes = Recipe.objects.filter(user_id=request.session['logged_in'])
+    for recipe in recipes:
+        idList.append(recipe.id)
+    ingredients = Ingredient.objects.filter(recipe_id__in=idList)
+    steps = Step.objects.filter(recipe_id__in=idList)
+    context = {
+        'recipes': Recipe.objects.filter(user_id=request.session['logged_in']),
+        'ingredients':ingredients,
+        'steps':steps
+    }
+    return render (request, 'lefestin/show_recipes.html', context)
 def delete_recipe(request):
     recipes = Recipe.objects.all()
     recipes.delete()

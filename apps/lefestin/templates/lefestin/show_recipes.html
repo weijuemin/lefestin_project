@@ -49,16 +49,16 @@
 	    </div><!-- /.navbar-collapse -->
 	  </div><!-- /.container-fluid -->
 	</nav>
-	<div class="container-fluid latest_recipe">
-		<p>{{ recipe.name }}</p>
-		<p>creator: {{recipe.user.first_name}}</p>
-		<img src="{{recipe.product_pic.url}}" alt="{{recipe.product_pic.url}}">
-		{% for ingredient in ingredients %}
-		<p>{{ingredient.quantity}}: {{ingredient.name}}</p>
+	<div class="container">
+	{% if recipes %}
+		{% for recipe in recipes %}
+		<div>
+			<img src="{{recipe.product_pic.url}}" alt="{{recipe.product_pic.url}}" class="small flexItem">
+			<h3 class="flexItem"><a href="{% url 'show_recipe' recipe.id %}">{{ recipe.name }}</a></h3>
+			<hr>
+		</div>
 		{% endfor %}
-		{% for step in steps %}
-		<p>{{step.step_numer}}: {{step.direction}}</p>
-		{% endfor %}
+	{% endif %}
 	</div>
 </body>
 </html>

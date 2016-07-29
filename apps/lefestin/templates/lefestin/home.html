@@ -8,13 +8,47 @@
     <script src="{% static 'lefestin/js/jquery.js' %}"></script>
     <script src="{% static 'lefestin/js/Bootstrap.js' %}"></script>
     <link rel="stylesheet" href="{% static 'lefestin/css/bootstrap.css' %}">
-	<link rel="stylesheet" href="{% static 'lefestin/css/home.css' %}">
     <script src="{% static 'lefestin/js/jqueryui.js' %}"></script>
+	<link rel="stylesheet" href="{% static 'lefestin/css/home.css' %}">
+	<link rel="stylesheet" href="{% static 'lefestin/css/styles.css' %}">
 	<script src="{% static 'lefestin/js/main.js' %}"></script>
     <link rel="stylesheet" href="{% static 'lefestin/css/jqueryui.css' %}">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 </head>
 <body>
+<nav class="navbar navbar-inverse radius">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Le Festin</a>
+    </div>
+	
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a href="{%url 'index'%}">Home</a></li>
+        <li><a href="{%url 'showgroups'%}">Groups</a></li>
+        <li><a href="{%url 'showrecipes'%}">Recipes</a></li>
+      </ul>
+      <form action="{% url 'search_group' %}" method="post" class="navbar-form navbar-left">
+      {% csrf_token %}
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search group" name="search_group">
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+      </form>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#">{{request.session.fname}}</a></li>
+        <li><a href="{% url 'logout' %}">Log out</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
 	{% if messages %}
 	<ul class="list-group">
 	    <li class="list-group-item list-group-item-danger">ATTENTION REQUIRED</li>
@@ -23,14 +57,58 @@
 	    {% endfor %}
 	</ul>
 	{% endif %}
-    <button class="btn btn-default"><a href="{% url 'logout' %}">Logout</a></button>
-    <h1>Le Festin</h1>
-	<p>Welcome {{ loggedin.first_name }}!</p>
-	<button id="id_addgroup" class="btn btn-info">Add a group</button>
-	<div id="add_group"></div>
-    <button class="btn btn-info"><a href="{% url 'create_recipe' %}">Create recipe</a></button>
+	<div class="jumbotron header">
+		<div class="container">
+		  <h1>Le Festin</h1>
+		</div>
+	</div>
+    <div class="container">
+    	<div class="row">
+    		<div class="col-md-4 col-md-offset-0 col-sm-10 col-sm-offset-1 col-xm-12 homeShow">
+    		<div class="innerBorder">
+    			<div class="userInfo">
+    				<h3>Your recipes</h3>
+    				{% if userRecipes %}
+	    				<ul>
+	    				{% for recipe in userRecipes %}
+	    					<li><a href="{% url 'show_recipe' recipe.id %}"></a>{{ recipe.name }}</li>
+	    				{% endfor %}
+	    				</ul>
+    				{% endif %}
+    				{% if not userRecipes %}
+    				<p>You don't have any recipe yet. Start uploading today!</p>
+    				{% endif %}
+    			</div>
+    			<div class="userInfo">
+    				<h3>Your groups</h3>
+    				{% if userGroups %}
+	    				<ul>
+	    				{% for group in userGroups %}
+	    					<li>{{ group.group_name }}</li>
+	    				{% endfor %}
+	    				</ul>
+    				{% endif %}
+    				{% if not userGroups %}
+    				<p>You don't have any group yet. Start connecting!</p>
+    				{% endif %}
+    			</div>
+    		</div>
+    		</div>
+    		<div class="col-md-4 col-md-offset-0 col-sm-10 col-sm-offset-1 col-xm-12 homeShow">
+    			<div class="innerBorder">
+    			<img src="{% static 'lefestin/pics/family.png' %}" alt="family.png">
+    			<button id="id_addgroup" class="btn btn-info">Add a group</button>
+    			</div>
+    		</div>
+    		<div class="col-md-4 col-md-offset-0 col-sm-10 col-sm-offset-1 col-xm-12 homeShow">
+    		<div class="innerBorder">
+    			<img src="{% static 'lefestin/pics/food.jpg' %}" alt="food.jpg">
+    			<button class="btn btn-info"><a href="{% url 'create_recipe' %}">Create recipe</a></button>
+    			</div>
+    		</div>
+    	</div>
+    </div>
 	<div id="toggle_addgroup" class="hide">
-		
 	    <h2>Add a group:</h2>
 	    <form action="{% url 'process_addgroup' %}" method="POST" id="process_addgroup" class="form-horizontal" enctype="multipart/form-data">
 	        {% csrf_token %}
