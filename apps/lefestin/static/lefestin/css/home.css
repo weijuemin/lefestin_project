@@ -24,10 +24,16 @@
 	outline: 2px inset rgb(24,113,153);
 }
 .header {
+<<<<<<< HEAD
 	background-image: url('../pics/half_pork.png');
 	height: 60vh;
+=======
+	height: 60vh;
+	background-image: url('../pics/header.jpg');
+>>>>>>> parent of 081eddc... added styling to registration page, some cleanup to home
 	background-size: cover;
 }
+<<<<<<< HEAD
 
 #styleheader{
     color: white;
@@ -35,6 +41,8 @@
     margin: 10% 0% 0% 23%;
 }
 
+=======
+>>>>>>> parent of 081eddc... added styling to registration page, some cleanup to home
 .userInfo:first-child {
 	height: 35vh;
 	overflow-y: scroll;
