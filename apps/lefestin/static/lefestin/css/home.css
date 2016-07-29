@@ -24,11 +24,16 @@
 	outline: 2px inset rgb(24,113,153);
 }
 .header {
-	height: 60vh;
-	background-image: url('../pics/header.jpg');
+    height: 25%;
+	background-image: url('../pics/half_pork.png');
 	background-size: cover;
 
 }
+#styleheader{
+    color: white;
+    font-family: serif;
+}
+
 .userInfo:first-child {
 	height: 35vh;
 	overflow-y: scroll;

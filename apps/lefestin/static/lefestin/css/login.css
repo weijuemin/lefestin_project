@@ -16,24 +16,34 @@
 #logo_div {
     padding: 30% 32% 3% 32%;
 }
+#registration_logo {
+    padding: 20% 32% 10% 32%;
+}
+
 #login_div {
     margin-top: 8%;
     background-color: white;
     padding: 10% 18% 12% 18%;
     text-align: center;
 }
-#login_submit_btn {
+#registration_div {
+    background-color: white;
+    padding: 10% 18% 15% 18%;
+    text-align: center;
+}
+#login_submit_btn, #register_submit_btn {
     border-radius: 5px;
     padding: 3% 41% 3% 41%;
     margin-bottom: 6%;
     background-color: #56C4FF;
     color: white;
     font-family: Verdana;
+    border-style: none;
 }
-#login_heading{
+#login_heading, #registration_heading {
     font-weight: bold;
 }
-#register_here {
+#register_here, #login_here {
     color: #56C4FF;
 }
 a:link, a:visited {
